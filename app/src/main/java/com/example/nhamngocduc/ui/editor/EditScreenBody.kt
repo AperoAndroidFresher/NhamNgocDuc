@@ -1,8 +1,9 @@
 package com.example.nhamngocduc.ui.editor
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -58,7 +59,7 @@ fun EditScreenBody(
     LaunchedEffect(showDialog) {
         if (showDialog) {
             showDialogContent = true
-            delay(2000L)
+            delay(1500L)
             showDialogContent = false
             delay(500L)
             showDialog = false
@@ -88,7 +89,7 @@ fun EditScreenBody(
                     value = name,
                     sectorLabelText = "NAME",
                     placeholderText = "Enter your name...",
-                    readOnly = !isEditable,
+                    enabled = !isEditable,
                     onValueChanged = onNameChanged,
                 )
 
@@ -98,7 +99,7 @@ fun EditScreenBody(
                     value = phoneNumber,
                     sectorLabelText = "PHONE NUMBER",
                     placeholderText = "Your phone number...",
-                    readOnly = !isEditable,
+                    enabled = !isEditable,
                     onValueChanged = onPhoneChanged,
                 )
             }
@@ -108,7 +109,7 @@ fun EditScreenBody(
                 value = schoolName,
                 sectorLabelText = "UNIVERSITY NAME",
                 placeholderText = "Your university name...",
-                readOnly = !isEditable,
+                enabled = !isEditable,
                 onValueChanged = onSchoolNameChanged,
             )
 
@@ -119,7 +120,7 @@ fun EditScreenBody(
                 maxLines = 8,
                 sectorLabelText = "DESCRIBE YOUR SELF",
                 placeholderText = "Enter a description about yoursself...",
-                readOnly = !isEditable,
+                enabled = !isEditable,
                 onValueChanged = onDescriptionChanged
             )
             Spacer(
@@ -135,9 +136,7 @@ fun EditScreenBody(
                     enter = slideInVertically{
                         it -> it
                     },
-                    exit = slideOutVertically{
-                        it -> it / 4
-                    },
+                    exit = scaleOut(tween(500)),
                 ) {
                     Button(
                         colors = ButtonDefaults.buttonColors(Color.Black),

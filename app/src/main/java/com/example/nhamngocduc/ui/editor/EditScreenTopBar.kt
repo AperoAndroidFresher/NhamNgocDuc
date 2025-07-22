@@ -1,6 +1,10 @@
 package com.example.nhamngocduc.ui.editor
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -51,7 +55,9 @@ fun EditScreenTopBar(
                 onClick = onActionClick
             ) {
                 AnimatedVisibility(
-                    visible = !isEditable
+                    visible = !isEditable,
+                    enter = scaleIn(animationSpec = tween(500)),
+                    exit = scaleOut(animationSpec = tween(500))
                 ) {
                     Icon(
                         modifier = Modifier.size(24.dp),

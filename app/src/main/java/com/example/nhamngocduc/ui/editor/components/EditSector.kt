@@ -28,7 +28,7 @@ fun EditTextSector(
     keyboardType: KeyboardType = KeyboardType.Text,
     sectorLabelText: String,
     placeholderText: String,
-    readOnly: Boolean,
+    enabled: Boolean,
     onValueChanged: (String) -> Unit,
 ) {
 
@@ -46,19 +46,18 @@ fun EditTextSector(
         Spacer(
             modifier = Modifier.height(12.dp)
         )
+
         OutlinedTextField(
+            enabled = !enabled,
             modifier = Modifier
                 .background(color = Color.White, shape = MaterialTheme.shapes.medium)
                 .fillMaxWidth(),
-            readOnly = readOnly,
             keyboardOptions = KeyboardOptions(
                 keyboardType = keyboardType,
                 imeAction = ImeAction.Next
             ),
             value = value,
-            onValueChange = {
-                onValueChanged(it)
-            },
+            onValueChange = onValueChanged,
             colors = OutlinedTextFieldDefaults.colors(
                 Color.Gray,
                 Color.Gray,
