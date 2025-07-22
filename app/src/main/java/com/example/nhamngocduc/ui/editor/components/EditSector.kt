@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -13,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
@@ -22,6 +24,7 @@ fun EditTextSector(
     value: String,
     minLines: Int = 1,
     maxLines: Int = 1,
+    keyboardType: KeyboardType = KeyboardType.Text,
     sectorLabelText: String,
     placeholderText: String,
     readOnly: Boolean,
@@ -47,6 +50,9 @@ fun EditTextSector(
                 .background(color = Color.White, shape = MaterialTheme.shapes.medium)
                 .fillMaxWidth(),
             readOnly = readOnly,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType
+            ),
             value = value,
             onValueChange = {
                 onValueChanged(it)

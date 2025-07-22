@@ -24,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.nhamngocduc.ui.editor.components.EditScreenDialog
 import com.example.nhamngocduc.ui.editor.components.EditTextSector
@@ -91,6 +92,7 @@ fun EditScreenBody(
 
                 EditTextSector(
                     modifier = Modifier.weight(1f),
+                    keyboardType = KeyboardType.Number,
                     value = phoneNumber,
                     sectorLabelText = "PHONE NUMBER",
                     placeholderText = "Your phone number...",
