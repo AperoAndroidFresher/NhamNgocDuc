@@ -1,6 +1,8 @@
 package com.example.nhamngocduc.ui.editor
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -129,7 +131,13 @@ fun EditScreenBody(
                 horizontalArrangement = Arrangement.Center
             ) {
                 AnimatedVisibility(
-                    visible = isEditable
+                    visible = isEditable,
+                    enter = slideInVertically{
+                        it -> it
+                    },
+                    exit = slideOutVertically{
+                        it -> it / 4
+                    },
                 ) {
                     Button(
                         colors = ButtonDefaults.buttonColors(Color.Black),

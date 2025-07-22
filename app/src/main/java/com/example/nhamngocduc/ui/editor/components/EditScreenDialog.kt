@@ -68,10 +68,10 @@ fun EditScreenDialog(
                         Spacer(modifier = Modifier.height(16.dp))
 
                         Text(
-                            text = "Your information has \nbeen updates!",
+                            text = "Your information has been updated!",
                             style = MaterialTheme.typography.bodyLarge.copy(
                                 color = Color.Black,
-                                fontWeight = FontWeight.Medium,
+                                fontWeight = FontWeight.SemiBold,
                                 textAlign = TextAlign.Center
                             )
                         )
