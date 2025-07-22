@@ -5,6 +5,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -14,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,6 +47,7 @@ fun EditScreenTopBar(
         },
         navigationIcon = {
             TextButton(
+                enabled = false,
                 onClick = {}
             ) {
 
@@ -52,6 +55,7 @@ fun EditScreenTopBar(
         },
         actions = {
             IconButton(
+                enabled = !isEditable,
                 onClick = onActionClick
             ) {
                 AnimatedVisibility(
@@ -66,6 +70,7 @@ fun EditScreenTopBar(
                     )
                 }
             }
-        }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(Color(0xFFF5FAFC))
     )
 }

@@ -4,6 +4,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +15,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -29,6 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.core.text.isDigitsOnly
 import com.example.nhamngocduc.ui.editor.components.EditScreenDialog
 import com.example.nhamngocduc.ui.editor.components.EditTextSector
 import com.example.nhamngocduc.ui.editor.components.ProfileImage
@@ -70,15 +75,15 @@ fun EditScreenBody(
         modifier = modifier.fillMaxSize()
     ) {
         Column(
-            modifier = Modifier.fillMaxSize().padding(top = 16.dp)
+            modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())
         ) {
             ProfileImage(
-                modifier = Modifier.fillMaxWidth(),
-                size = 128.dp,
+                modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                size = 160.dp,
                 borderColor = Color.Black
             )
             Spacer(
-                modifier = Modifier.height(16.dp)
+                modifier = Modifier.height(32.dp)
             )
 
             Row(
@@ -86,6 +91,7 @@ fun EditScreenBody(
             ) {
                 EditTextSector(
                     modifier = Modifier.weight(1f),
+                    isError = name.any{it.isDigit()},
                     value = name,
                     sectorLabelText = "NAME",
                     placeholderText = "Enter your name...",
@@ -95,6 +101,7 @@ fun EditScreenBody(
 
                 EditTextSector(
                     modifier = Modifier.weight(1f),
+                    isError = !phoneNumber.isDigitsOnly(),
                     keyboardType = KeyboardType.Number,
                     value = phoneNumber,
                     sectorLabelText = "PHONE NUMBER",
@@ -118,8 +125,8 @@ fun EditScreenBody(
                 value = description,
                 minLines = 8,
                 maxLines = 8,
-                sectorLabelText = "DESCRIBE YOUR SELF",
-                placeholderText = "Enter a description about yoursself...",
+                sectorLabelText = "DESCRIBE YOURSELF",
+                placeholderText = "Enter a description about yourself...",
                 enabled = !isEditable,
                 onValueChanged = onDescriptionChanged
             )
