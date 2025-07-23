@@ -1,16 +1,13 @@
 package com.example.nhamngocduc.ui.editor.components
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,6 +25,8 @@ fun EditTextSector(
     minLines: Int = 1,
     maxLines: Int = 1,
     keyboardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction = ImeAction.Next,
+    errorText: String = "",
     value: String,
     sectorLabelText: String,
     placeholderText: String,
@@ -37,7 +36,7 @@ fun EditTextSector(
 
 
     Column(
-        modifier = modifier.padding(horizontal = 4.dp, vertical = 12.dp)
+        modifier = modifier.padding(4.dp)
     ) {
         Text(
             modifier = Modifier.padding(start = 8.dp),
@@ -53,12 +52,11 @@ fun EditTextSector(
 
         OutlinedTextField(
             modifier = Modifier
-                .background(color = Color.White, shape = MaterialTheme.shapes.medium)
                 .fillMaxWidth(),
             enabled = !enabled,
             keyboardOptions = KeyboardOptions(
                 keyboardType = keyboardType,
-                imeAction = ImeAction.Next
+                imeAction = imeAction
             ),
             isError = isError,
             value = value,
@@ -74,9 +72,31 @@ fun EditTextSector(
                     maxLines = 1
                 )
             },
+            supportingText = {
+                if (isError) {
+                    Text(
+                        text = errorText,
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            color = Color.Red,
+                            fontWeight = FontWeight.Medium
+                        ),
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1
+                    )
+                } else {
+                    Text("")
+                }
+            },
             textStyle = MaterialTheme.typography.bodyLarge.copy(
                 color = Color.Gray,
                 fontWeight = FontWeight.Medium
+            ),
+            colors = OutlinedTextFieldDefaults.colors(
+                errorBorderColor = Color.Red,
+                errorContainerColor = Color.White,
+                unfocusedContainerColor = Color.White,
+                focusedContainerColor = Color.White,
+                disabledContainerColor = Color.White
             ),
             shape = MaterialTheme.shapes.medium,
             minLines = minLines,
