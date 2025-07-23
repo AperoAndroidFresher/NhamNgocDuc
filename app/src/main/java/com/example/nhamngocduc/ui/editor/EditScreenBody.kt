@@ -31,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
@@ -61,6 +62,11 @@ fun EditScreenBody(
         mutableStateOf(false)
     }
 
+    var submitCondition by rememberSaveable {
+        mutableStateOf(false)
+    }
+    submitCondition = checkSubmitCondition(name, schoolName, phoneNumber)
+
     LaunchedEffect(showDialog) {
         if (showDialog) {
             showDialogContent = true
@@ -79,7 +85,7 @@ fun EditScreenBody(
         ) {
             ProfileImage(
                 modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
-                size = 160.dp,
+                size = 128.dp,
                 borderColor = Color.Black
             )
             Spacer(
@@ -91,7 +97,8 @@ fun EditScreenBody(
             ) {
                 EditTextSector(
                     modifier = Modifier.weight(1f),
-                    isError = name.any{it.isDigit()},
+                    isError = name.filterNot { it.isLetter() }.count() > 0,
+                    errorText = "*Only accepts letter",
                     value = name,
                     sectorLabelText = "NAME",
                     placeholderText = "Enter your name...",
@@ -103,6 +110,7 @@ fun EditScreenBody(
                     modifier = Modifier.weight(1f),
                     isError = !phoneNumber.isDigitsOnly(),
                     keyboardType = KeyboardType.Number,
+                    errorText = "*Only accepts number",
                     value = phoneNumber,
                     sectorLabelText = "PHONE NUMBER",
                     placeholderText = "Your phone number...",
@@ -113,6 +121,8 @@ fun EditScreenBody(
 
             EditTextSector(
                 modifier = Modifier.fillMaxWidth(),
+                isError = schoolName.filterNot { it.isLetter() }.count() > 0,
+                errorText = "*Only accepts letter",
                 value = schoolName,
                 sectorLabelText = "UNIVERSITY NAME",
                 placeholderText = "Your university name...",
@@ -122,6 +132,7 @@ fun EditScreenBody(
 
             EditTextSector(
                 modifier = Modifier.fillMaxWidth(),
+                imeAction = ImeAction.Done,
                 value = description,
                 minLines = 8,
                 maxLines = 8,
@@ -141,7 +152,7 @@ fun EditScreenBody(
                 AnimatedVisibility(
                     visible = isEditable,
                     enter = slideInVertically{
-                        it -> it
+                            it -> it
                     },
                     exit = scaleOut(tween(500)),
                 ) {
@@ -149,8 +160,11 @@ fun EditScreenBody(
                         colors = ButtonDefaults.buttonColors(Color.Black),
                         shape = ShapeDefaults.Medium,
                         onClick = {
-                            onSubmitClick()
-                            showDialog = true
+                            // Log.d("ONE TWO THREE", "$submitCondition")
+                            if (submitCondition) {
+                                onSubmitClick()
+                                showDialog = true
+                            }
                         }
                     ) {
                         Text(
@@ -174,4 +188,16 @@ fun EditScreenBody(
             visibleDialogContent = showDialogContent,
         )
     }
+}
+
+private fun checkPhoneNumberCondition(phoneNumber: String) = phoneNumber.isDigitsOnly() && phoneNumber.length in 10..15
+
+private fun checkUniversityNameCondition(universityName: String) = universityName.length > 3 && universityName.none {it.isDigit()}
+
+private fun checkUsernameCondition(name: String) = name.none {it.isDigit()} && name.length in 1..30
+
+private fun checkSubmitCondition(name: String, universityName: String, phoneNumber: String): Boolean {
+    return checkUsernameCondition(name)
+            && checkUniversityNameCondition(universityName)
+            && checkPhoneNumberCondition(phoneNumber)
 }
